@@ -90,26 +90,21 @@ const enrollmentSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Compound index to ensure one enrollment per user per course
 enrollmentSchema.index({ learnerId: 1, courseId: 1 }, { unique: true });
 
-// Other indexes for performance
 enrollmentSchema.index({ learnerId: 1 });
 enrollmentSchema.index({ courseId: 1 });
 enrollmentSchema.index({ status: 1 });
 enrollmentSchema.index({ enrolledAt: -1 });
 
-// Virtual for completed items count
 enrollmentSchema.virtual('completedItemsCount').get(function() {
   return this.progress.filter(item => item.isCompleted).length;
 });
 
-// Virtual for total time spent
 enrollmentSchema.virtual('totalTimeSpent').get(function() {
   return this.progress.reduce((total, item) => total + (item.timeSpent || 0), 0);
 });
 
-// Method to update progress for a specific item
 enrollmentSchema.methods.updateItemProgress = function(itemId, isCompleted, timeSpent = 0) {
   const existingProgress = this.progress.find(p => p.itemId.toString() === itemId.toString());
   
@@ -134,7 +129,6 @@ enrollmentSchema.methods.updateItemProgress = function(itemId, isCompleted, time
   return this.save();
 };
 
-// Method to calculate completion percentage
 enrollmentSchema.methods.calculateCompletion = async function() {
   try {
     const course = await mongoose.model('Course').findById(this.courseId);
@@ -160,12 +154,10 @@ enrollmentSchema.methods.calculateCompletion = async function() {
     
     return percentage;
   } catch (error) {
-    console.error('Error calculating completion:', error);
     return 0;
   }
 };
 
-// Static method to get enrollment statistics
 enrollmentSchema.statics.getStats = function(courseId = null) {
   const match = courseId ? { courseId } : {};
   
@@ -181,7 +173,6 @@ enrollmentSchema.statics.getStats = function(courseId = null) {
   ]);
 };
 
-// Ensure virtuals are included in JSON output
 enrollmentSchema.set('toJSON', { virtuals: true });
 enrollmentSchema.set('toObject', { virtuals: true });
 

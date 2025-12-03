@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Modal, Form, Table, Badge, Alert } from 'react-bootstrap';
-import { courseAPI } from '../api';
+import { courseAPI, documentAPI } from '../api';
 import { LoadingSpinner, ErrorMessage, ConfirmationModal } from '../components/CommonComponents';
 import { useForm } from '../hooks/useCustomHooks';
 
@@ -8,10 +8,13 @@ const AdminCourseView = ({ course, onCourseUpdate }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showModuleModal, setShowModuleModal] = useState(false);
   const [showItemModal, setShowItemModal] = useState(false);
+  const [showDocumentModal, setShowDocumentModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [selectedModule, setSelectedModule] = useState(null);
   const [editingModule, setEditingModule] = useState(null);
   const [editingItem, setEditingItem] = useState(null);
+  const [documents, setDocuments] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -61,6 +64,18 @@ const AdminCourseView = ({ course, onCourseUpdate }) => {
     duration: 0,
     order: 1
   }, itemValidation);
+
+  // Document form
+  const documentValidation = {
+    title: { required: 'Document title is required' },
+    moduleId: { required: 'Module is required' }
+  };
+
+  const documentForm = useForm({
+    title: '',
+    moduleId: '',
+    tags: ''
+  }, documentValidation);
 
   const handleUpdateCourse = async (formData) => {
     try {
@@ -192,6 +207,90 @@ const AdminCourseView = ({ course, onCourseUpdate }) => {
     }
   };
 
+  // Document management functions
+  const fetchDocuments = async () => {
+    try {
+      if (!course?._id) return;
+      const response = await documentAPI.getDocumentsByCourse(course._id);
+      setDocuments(response.data.data.documents || []);
+    } catch (err) {
+      console.error('Failed to fetch documents:', err);
+    }
+  };
+
+  const handleUploadDocument = async (formData) => {
+    try {
+      if (!selectedFile) {
+        setError('Please select a file to upload');
+        return;
+      }
+
+      setLoading(true);
+      
+      const uploadData = new FormData();
+      uploadData.append('file', selectedFile);
+      uploadData.append('courseId', course._id);
+      uploadData.append('moduleId', formData.moduleId);
+      uploadData.append('title', formData.title);
+      if (formData.tags) uploadData.append('tags', formData.tags);
+
+      await documentAPI.uploadDocument(uploadData);
+      setSuccess('Document uploaded successfully!');
+      setShowDocumentModal(false);
+      setSelectedFile(null);
+      documentForm.reset();
+      await fetchDocuments();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to upload document');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSummarizeDocument = async (documentId) => {
+    try {
+      setLoading(true);
+      console.log('Attempting to summarize document:', documentId);
+      
+      if (!documentId) {
+        setError('Document ID is required for summarization');
+        return;
+      }
+      
+      const response = await documentAPI.summarizeDocument(documentId, { provider: 'gemini' });
+      console.log('Summarization response:', response);
+      
+      setSuccess('Document summarized successfully!');
+      await fetchDocuments();
+    } catch (err) {
+      console.error('Summarization error:', err);
+
+      setError(err.response?.data?.message || 'Token limit reached or failed to summarize document');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteDocument = async (documentId) => {
+    try {
+      setLoading(true);
+      await documentAPI.deleteDocument(documentId);
+      setSuccess('Document deleted successfully!');
+      await fetchDocuments();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to delete document');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const openAddDocument = (module) => {
+    setSelectedModule(module);
+    documentForm.reset({ moduleId: module._id });
+    setSelectedFile(null);
+    setShowDocumentModal(true);
+  };
+
   const handleDeleteItem = async (moduleId, itemId) => {
     try {
       setLoading(true);
@@ -235,6 +334,13 @@ const AdminCourseView = ({ course, onCourseUpdate }) => {
     });
     setShowItemModal(true);
   };
+
+  // Load documents when course changes
+  useEffect(() => {
+    if (course?._id) {
+      fetchDocuments();
+    }
+  }, [course]);
 
   if (loading) {
     return <LoadingSpinner text="Processing..." />;
@@ -328,7 +434,7 @@ const AdminCourseView = ({ course, onCourseUpdate }) => {
           </Card>
 
           {/* Modules */}
-          <Card>
+          <Card className="mb-4">
             <Card.Header className="d-flex justify-content-between align-items-center">
               <h5 className="mb-0">Course Modules</h5>
               <Button 
@@ -365,6 +471,14 @@ const AdminCourseView = ({ course, onCourseUpdate }) => {
                             onClick={() => openAddItem(module)}
                           >
                             <i className="bi bi-plus"></i>
+                          </Button>
+                          <Button
+                            variant="outline-info"
+                            size="sm"
+                            onClick={() => openAddDocument(module)}
+                            title="Add Document"
+                          >
+                            <i className="bi bi-file-earmark-plus"></i>
                           </Button>
                           <Button
                             variant="outline-secondary"
@@ -439,6 +553,84 @@ const AdminCourseView = ({ course, onCourseUpdate }) => {
               )}
             </Card.Body>
           </Card>
+
+          {/* Documents */}
+          <Card>
+            <Card.Header className="d-flex justify-content-between align-items-center">
+              <h5 className="mb-0">Course Documents</h5>
+              <Button 
+                variant="success" 
+                size="sm"
+                onClick={() => fetchDocuments()}
+              >
+                <i className="bi bi-arrow-clockwise me-1"></i>Refresh
+              </Button>
+            </Card.Header>
+            <Card.Body className="p-0">
+              {documents && documents.length > 0 ? (
+                <Table responsive>
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Type</th>
+                      <th>Size</th>
+                      <th>Summary</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {documents.map(doc => (
+                      <tr key={doc._id}>
+                        <td>{doc.title}</td>
+                        <td>
+                          <Badge bg="secondary">
+                            {doc.fileType?.toUpperCase()}
+                          </Badge>
+                        </td>
+                        <td>{(doc.fileSize / 1024).toFixed(1)} KB</td>
+                        <td>
+                          {doc.summaryGenerated ? (
+                            <Badge bg="success" title={doc.aiSummary ? doc.aiSummary.substring(0, 100) + '...' : 'Summary available'}>
+                              Generated
+                            </Badge>
+                          ) : (
+                            <Button
+                              variant="outline-primary"
+                              size="sm"
+                              onClick={() => handleSummarizeDocument(doc._id)}
+                              disabled={loading}
+                              title={`Generate summary for: ${doc.title}`}
+                            >
+                              {loading ? (
+                                <span className="spinner-border spinner-border-sm"></span>
+                              ) : (
+                                'Generate'
+                              )}
+                            </Button>
+                          )}
+                        </td>
+                        <td>
+                          <Button
+                            variant="outline-danger"
+                            size="sm"
+                            onClick={() => handleDeleteDocument(doc._id)}
+                            disabled={loading}
+                          >
+                            <i className="bi bi-trash"></i>
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              ) : (
+                <div className="p-4 text-center text-muted">
+                  <i className="bi bi-file-earmark fs-2 d-block mb-2"></i>
+                  <p className="mb-0">No documents uploaded yet</p>
+                </div>
+              )}
+            </Card.Body>
+          </Card>
         </Col>
 
         <Col lg={4}>
@@ -448,9 +640,6 @@ const AdminCourseView = ({ course, onCourseUpdate }) => {
             </Card.Header>
             <Card.Body>
               <div className="d-grid gap-2">
-                <Button variant="outline-primary" href={`/courses/${course._id}`} target="_blank">
-                  <i className="bi bi-eye me-2"></i>Preview Course
-                </Button>
                 <Button 
                   variant={course.isPublished ? 'outline-warning' : 'outline-success'}
                   onClick={() => handleUpdateCourse({ isPublished: !course.isPublished })}
@@ -458,16 +647,24 @@ const AdminCourseView = ({ course, onCourseUpdate }) => {
                   <i className={`bi bi-${course.isPublished ? 'eye-slash' : 'eye'} me-2`}></i>
                   {course.isPublished ? 'Unpublish' : 'Publish'}
                 </Button>
-                <Button variant="outline-secondary">
-                  <i className="bi bi-download me-2"></i>Export Data
+                <Button 
+                  variant="outline-info"
+                  onClick={() => {
+                    setSelectedModule(null);
+                    documentForm.reset();
+                    setSelectedFile(null);
+                    setShowDocumentModal(true);
+                  }}
+                >
+                  <i className="bi bi-file-earmark-plus me-2"></i>Upload Document
                 </Button>
+
               </div>
             </Card.Body>
           </Card>
         </Col>
       </Row>
 
-      {/* Edit Course Modal */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Edit Course</Modal.Title>
@@ -742,6 +939,96 @@ const AdminCourseView = ({ course, onCourseUpdate }) => {
             </Button>
             <Button type="submit" variant="primary">
               {editingItem ? 'Update Item' : 'Add Item'}
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+
+      {/* Upload Document Modal */}
+      <Modal show={showDocumentModal} onHide={() => setShowDocumentModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Upload Document
+            {selectedModule && ` to ${selectedModule.title}`}
+          </Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={(e) => {
+          e.preventDefault();
+          documentForm.handleSubmit(handleUploadDocument);
+        }}>
+          <Modal.Body>
+            <Form.Group className="mb-3">
+              <Form.Label>Select File</Form.Label>
+              <Form.Control
+                type="file"
+                accept=".pdf,.doc,.docx,.txt,.ppt,.pptx"
+                onChange={(e) => setSelectedFile(e.target.files[0])}
+                required
+              />
+              <Form.Text className="text-muted">
+                Supported formats: PDF, DOC, DOCX, TXT, PPT, PPTX
+              </Form.Text>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                name="title"
+                value={documentForm.values.title}
+                onChange={documentForm.handleChange}
+                onBlur={documentForm.handleBlur}
+                isInvalid={documentForm.touched.title && !!documentForm.errors.title}
+                placeholder="Document title"
+              />
+              <Form.Control.Feedback type="invalid">
+                {documentForm.errors.title}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Module</Form.Label>
+              <Form.Select
+                name="moduleId"
+                value={documentForm.values.moduleId}
+                onChange={documentForm.handleChange}
+                onBlur={documentForm.handleBlur}
+                isInvalid={documentForm.touched.moduleId && !!documentForm.errors.moduleId}
+              >
+                <option value="">Select Module</option>
+                {course.modules?.map(module => (
+                  <option key={module._id} value={module._id}>
+                    {module.title}
+                  </option>
+                ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                {documentForm.errors.moduleId}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Tags (optional)</Form.Label>
+              <Form.Control
+                name="tags"
+                value={documentForm.values.tags}
+                onChange={documentForm.handleChange}
+                placeholder="Comma-separated tags"
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowDocumentModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" disabled={!selectedFile || loading}>
+              {loading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                  Uploading...
+                </>
+              ) : (
+                'Upload Document'
+              )}
             </Button>
           </Modal.Footer>
         </Form>

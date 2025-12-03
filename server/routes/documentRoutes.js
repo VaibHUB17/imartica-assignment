@@ -7,8 +7,6 @@ import {
   getDocumentsByCourse,
   updateDocument,
   deleteDocument,
-  searchDocuments,
-  getDocumentStats
 } from '../controllers/documentController.js';
 import { summarizeDocument } from '../controllers/aiController.js';
 import { protect, adminOnly } from '../middlewares/authMiddleware.js';
@@ -16,7 +14,6 @@ import { uploadSingle } from '../middlewares/upload.js';
 
 const router = express.Router();
 
-// Validation middlewares
 const uploadDocumentValidation = [
   body('courseId')
     .notEmpty()
@@ -66,9 +63,6 @@ const summarizeValidation = [
     .withMessage('Provider must be either openai or gemini')
 ];
 
-// Routes
-router.get('/stats', protect, adminOnly, getDocumentStats);
-router.get('/search', protect, searchDocuments);
 router.post('/upload', protect, adminOnly, uploadSingle('file'), uploadDocumentValidation, uploadDocument);
 router.get('/course/:courseId', protect, getDocumentsByCourse);
 router.get('/:id', protect, getDocument);

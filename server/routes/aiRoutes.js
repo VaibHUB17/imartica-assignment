@@ -9,7 +9,6 @@ import { protect, adminOnly } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-// Validation middlewares
 const summarizeValidation = [
   body('force')
     .optional()
@@ -38,11 +37,7 @@ const batchSummarizeValidation = [
     .withMessage('Force must be a boolean value')
 ];
 
-// Routes
 router.get('/status', protect, adminOnly, getAIStatus);
 router.post('/summarize-batch', protect, adminOnly, batchSummarizeValidation, batchSummarizeDocuments);
-
-// Note: Document-specific summarization route is in documentRoutes
-// router.post('/documents/:id/summarize', protect, adminOnly, summarizeValidation, summarizeDocument);
 
 export default router;

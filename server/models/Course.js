@@ -129,30 +129,38 @@ const courseSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Indexes for better performance
 courseSchema.index({ title: 'text', description: 'text' });
 courseSchema.index({ createdBy: 1 });
 courseSchema.index({ category: 1 });
 courseSchema.index({ isPublished: 1 });
 courseSchema.index({ 'rating.average': -1 });
 
-// Virtual for total duration
 courseSchema.virtual('totalDuration').get(function() {
+  if (!this.modules || !Array.isArray(this.modules)) {
+    return 0;
+  }
   return this.modules.reduce((total, module) => {
+    if (!module.items || !Array.isArray(module.items)) {
+      return total;
+    }
     return total + module.items.reduce((moduleTotal, item) => {
       return moduleTotal + (item.duration || 0);
     }, 0);
   }, 0);
 });
 
-// Virtual for total items count
 courseSchema.virtual('totalItems').get(function() {
+  if (!this.modules || !Array.isArray(this.modules)) {
+    return 0;
+  }
   return this.modules.reduce((total, module) => {
+    if (!module.items || !Array.isArray(module.items)) {
+      return total;
+    }
     return total + module.items.length;
   }, 0);
 });
 
-// Ensure virtuals are included in JSON output
 courseSchema.set('toJSON', { virtuals: true });
 courseSchema.set('toObject', { virtuals: true });
 

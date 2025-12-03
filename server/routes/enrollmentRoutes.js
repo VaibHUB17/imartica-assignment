@@ -13,7 +13,6 @@ import { protect, adminOnly, ownerOrAdmin } from '../middlewares/authMiddleware.
 
 const router = express.Router();
 
-// Validation middlewares
 const enrollValidation = [
   body('courseId')
     .notEmpty()
@@ -53,7 +52,6 @@ const ratingValidation = [
     .withMessage('Review cannot exceed 500 characters')
 ];
 
-// Routes
 router.get('/stats', protect, adminOnly, getEnrollmentStats);
 router.post('/', protect, enrollValidation, enrollInCourse);
 router.get('/:userId', protect, ownerOrAdmin, getUserEnrollments);

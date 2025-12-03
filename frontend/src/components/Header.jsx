@@ -57,9 +57,6 @@ const Header = () => {
                     Admin
                   </Nav.Link>
                 )}
-                <Nav.Link as={Link} to="/my-courses" className="text-dark fw-medium">
-                  My Courses
-                </Nav.Link>
                 <NavDropdown title={user?.name || 'User'} id="user-dropdown" className="text-dark">
                   <NavDropdown.Item as={Link} to="/profile">
                     <i className="bi bi-person me-2"></i>

@@ -59,42 +59,6 @@ const CourseCard = ({
         e.currentTarget.style.boxShadow = '0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)';
       }}
     >
-      <div className="position-relative">
-        {thumbnail ? (
-          <Card.Img 
-            variant="top" 
-            src={thumbnail} 
-            alt={title}
-            style={{ height: '200px', objectFit: 'cover' }}
-          />
-        ) : (
-          <div 
-            className="d-flex align-items-center justify-content-center bg-light"
-            style={{ height: '200px' }}
-          >
-            <i className="bi bi-play-circle text-muted" style={{ fontSize: '3rem' }}></i>
-          </div>
-        )}
-        
-        {difficulty && (
-          <Badge 
-            bg={getDifficultyColor(difficulty)}
-            className="position-absolute top-0 start-0 m-2"
-          >
-            {difficulty}
-          </Badge>
-        )}
-
-        {!isPublished && (
-          <Badge 
-            bg="warning"
-            className="position-absolute top-0 end-0 m-2"
-          >
-            Draft
-          </Badge>
-        )}
-      </div>
-
       <Card.Body className="d-flex flex-column">
         <div className="mb-2">
           {category && (
@@ -162,28 +126,7 @@ const CourseCard = ({
               size="sm"
             >
               View Details
-            </Button>
-            
-            {showEnrollButton && !isEnrolled && (
-              <Button 
-                variant="primary"
-                size="sm"
-                onClick={handleEnroll}
-              >
-                Enroll Now
-              </Button>
-            )}
-
-            {isEnrolled && (
-              <Button 
-                as={Link} 
-                to={`/courses/${_id}`}
-                variant="success"
-                size="sm"
-              >
-                Continue Learning
-              </Button>
-            )}
+            </Button>      
           </div>
         </div>
       </Card.Body>

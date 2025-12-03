@@ -5,17 +5,14 @@ import {
   getApplications,
   getApplication,
   updateApplicationStatus,
-  setFollowUp,
-  getPendingFollowUps,
   getApplicationStats,
   deleteApplication,
-  bulkUpdateApplications
+
 } from '../controllers/applicationController.js';
 import { protect, adminOnly } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-// Validation middlewares
 const submitApplicationValidation = [
   body('name')
     .trim()
@@ -126,17 +123,12 @@ const bulkUpdateValidation = [
     .withMessage('Notes cannot exceed 2000 characters')
 ];
 
-// Public routes
 router.post('/', submitApplicationValidation, submitApplication);
 
-// Admin routes
 router.get('/stats', protect, adminOnly, getApplicationStats);
-router.get('/follow-up/pending', protect, adminOnly, getPendingFollowUps);
-router.put('/bulk-update', protect, adminOnly, bulkUpdateValidation, bulkUpdateApplications);
 router.get('/', protect, adminOnly, getApplications);
 router.get('/:id', protect, adminOnly, getApplication);
 router.put('/:id/status', protect, adminOnly, updateStatusValidation, updateApplicationStatus);
-router.put('/:id/follow-up', protect, adminOnly, followUpValidation, setFollowUp);
 router.delete('/:id', protect, adminOnly, deleteApplication);
 
 export default router;

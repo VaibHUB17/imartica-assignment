@@ -92,30 +92,25 @@ const documentSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Indexes for better performance
 documentSchema.index({ courseId: 1, moduleId: 1 });
 documentSchema.index({ uploadedBy: 1 });
 documentSchema.index({ title: 'text', extractedText: 'text' });
 documentSchema.index({ summaryGenerated: 1 });
 documentSchema.index({ isActive: 1 });
 
-// Virtual for file URL generation
 documentSchema.virtual('fullUrl').get(function() {
   return `${process.env.BASE_URL || 'http://localhost:5000'}/uploads/${this.fileName}`;
 });
 
-// Method to increment download count
 documentSchema.methods.incrementDownload = function() {
   this.downloadCount += 1;
   return this.save();
 };
 
-// Static method to find documents by course
 documentSchema.statics.findByCourse = function(courseId) {
   return this.find({ courseId, isActive: true }).populate('uploadedBy', 'name email');
 };
 
-// Static method to find documents needing AI summary
 documentSchema.statics.findPendingSummary = function() {
   return this.find({ 
     summaryGenerated: false, 
@@ -124,7 +119,6 @@ documentSchema.statics.findPendingSummary = function() {
   });
 };
 
-// Ensure virtuals are included in JSON output
 documentSchema.set('toJSON', { virtuals: true });
 documentSchema.set('toObject', { virtuals: true });
 

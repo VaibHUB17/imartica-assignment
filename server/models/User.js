@@ -48,10 +48,8 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Index for faster queries - removed duplicate email index since unique: true already creates one
 userSchema.index({ role: 1 });
 
-// Hash password before saving
 userSchema.pre('save', async function(next) {
   if (!this.isModified('passwordHash')) {
     return next();
@@ -66,12 +64,10 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-// Compare password method
 userSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.passwordHash);
 };
 
-// Transform output to remove sensitive data
 userSchema.methods.toJSON = function() {
   const obj = this.toObject();
   delete obj.passwordHash;

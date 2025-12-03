@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-// Create axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
@@ -49,8 +48,6 @@ api.interceptors.response.use(
       message: error.message
     });
     
-    // Only redirect to login if it's not the initial auth check
-    // This prevents redirect loops when checking authentication status
     if (error.response?.status === 401 && !error.config?.url?.includes('/auth/me')) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -106,6 +103,23 @@ export const enrollmentAPI = {
   cancelEnrollment: (userId, courseId) => api.put(`/enrollments/${userId}/${courseId}/cancel`),
   rateCourse: (userId, courseId, ratingData) => api.put(`/enrollments/${userId}/${courseId}/rate`, ratingData),
   getEnrollmentStats: () => api.get('/enrollments/stats'),
+};
+
+// Document API
+export const documentAPI = {
+  uploadDocument: (formData) => {
+    return api.post('/documents/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+  },
+  getDocument: (id) => api.get(`/documents/${id}`),
+  getDocumentsByCourse: (courseId, params = {}) => api.get(`/documents/course/${courseId}`, { params }),
+  updateDocument: (id, data) => api.put(`/documents/${id}`, data),
+  deleteDocument: (id) => api.delete(`/documents/${id}`),
+  downloadDocument: (id) => api.get(`/documents/${id}/download`, { responseType: 'blob' }),
+  summarizeDocument: (id, options = {}) => api.post(`/documents/${id}/summarize`, options),
+  searchDocuments: (query, params = {}) => api.get('/documents/search', { params: { q: query, ...params } }),
+  getStats: () => api.get('/documents/stats')
 };
 
 export default api;

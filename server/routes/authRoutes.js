@@ -15,7 +15,6 @@ import { protect, adminOnly } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-// Validation middlewares
 const registerValidation = [
   body('name')
     .trim()
@@ -72,18 +71,15 @@ const changePasswordValidation = [
     .withMessage('New password must contain at least one lowercase letter, one uppercase letter, and one number')
 ];
 
-// Public routes
 router.post('/register', registerValidation, register);
 router.post('/login', loginValidation, login);
 router.post('/refresh', refreshToken);
 
-// Protected routes (require authentication)
 router.get('/me', protect, getMe);
 router.put('/profile', protect, updateProfileValidation, updateProfile);
 router.put('/change-password', protect, changePasswordValidation, changePassword);
 router.post('/logout', protect, logout);
 
-// Admin only routes
 router.get('/users', protect, adminOnly, getAllUsers);
 router.put('/users/:id/deactivate', protect, adminOnly, deactivateUser);
 

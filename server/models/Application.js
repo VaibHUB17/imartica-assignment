@@ -100,7 +100,6 @@ const applicationSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Indexes for better performance
 applicationSchema.index({ email: 1 });
 applicationSchema.index({ status: 1 });
 applicationSchema.index({ priority: 1 });
@@ -108,16 +107,13 @@ applicationSchema.index({ courseApplied: 1 });
 applicationSchema.index({ createdAt: -1 });
 applicationSchema.index({ followUpDate: 1 });
 
-// Compound index for filtering
 applicationSchema.index({ status: 1, priority: 1 });
 applicationSchema.index({ courseApplied: 1, status: 1 });
 
-// Virtual for days since application
 applicationSchema.virtual('daysSinceApplication').get(function() {
   return Math.floor((Date.now() - this.createdAt) / (1000 * 60 * 60 * 24));
 });
 
-// Method to update status
 applicationSchema.methods.updateStatus = function(newStatus, userId = null, notes = '') {
   this.status = newStatus;
   
@@ -136,7 +132,6 @@ applicationSchema.methods.updateStatus = function(newStatus, userId = null, note
   return this.save();
 };
 
-// Method to set follow-up
 applicationSchema.methods.setFollowUp = function(date, notes = '') {
   this.followUpDate = date;
   this.status = 'follow_up';
@@ -149,7 +144,6 @@ applicationSchema.methods.setFollowUp = function(date, notes = '') {
   return this.save();
 };
 
-// Static method to get applications needing follow-up
 applicationSchema.statics.getNeedingFollowUp = function() {
   return this.find({
     followUpDate: { $lte: new Date() },
@@ -157,7 +151,6 @@ applicationSchema.statics.getNeedingFollowUp = function() {
   }).sort({ followUpDate: 1, priority: -1 });
 };
 
-// Static method to get application statistics
 applicationSchema.statics.getStats = function(dateRange = null) {
   const match = dateRange ? {
     createdAt: {
@@ -189,7 +182,6 @@ applicationSchema.statics.getStats = function(dateRange = null) {
   ]);
 };
 
-// Static method to get popular courses from applications
 applicationSchema.statics.getPopularCourses = function() {
   return this.aggregate([
     {
@@ -208,7 +200,6 @@ applicationSchema.statics.getPopularCourses = function() {
   ]);
 };
 
-// Ensure virtuals are included in JSON output
 applicationSchema.set('toJSON', { virtuals: true });
 applicationSchema.set('toObject', { virtuals: true });
 

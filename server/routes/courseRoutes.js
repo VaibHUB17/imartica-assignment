@@ -24,7 +24,6 @@ import { protect, adminOnly, optionalAuth } from '../middlewares/authMiddleware.
 
 const router = express.Router();
 
-// Validation middlewares
 const createCourseValidation = [
   body('title')
     .trim()
@@ -132,7 +131,6 @@ const itemValidation = [
     .withMessage('Order must be a non-negative integer')
 ];
 
-// Course routes
 router.get('/stats', protect, adminOnly, getCourseStats);
 router.post('/', protect, adminOnly, createCourseValidation, createCourse);
 router.get('/', optionalAuth, getCourses);
@@ -140,12 +138,10 @@ router.get('/:id', optionalAuth, getCourse);
 router.put('/:id', protect, adminOnly, updateCourseValidation, updateCourse);
 router.delete('/:id', protect, adminOnly, deleteCourse);
 
-// Module routes
 router.post('/:id/modules', protect, adminOnly, moduleValidation, addModule);
 router.put('/:courseId/modules/:moduleId', protect, adminOnly, moduleValidation, updateModule);
 router.delete('/:courseId/modules/:moduleId', protect, adminOnly, deleteModule);
 
-// Item routes
 router.post('/:courseId/modules/:moduleId/items', protect, adminOnly, itemValidation, addItem);
 router.get('/:courseId/modules/:moduleId/items', optionalAuth, getModuleItems);
 router.get('/:courseId/modules/:moduleId/items/:itemId', optionalAuth, getItem);

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Card, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { courseAPI } from '../api';
-import CourseCard from '../components/CourseCard';
-import { LoadingSpinner, ErrorMessage, SearchBox } from '../components/CommonComponents';
 
 const HomePage = () => {
   const [courses, setCourses] = useState([]);

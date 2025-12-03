@@ -18,25 +18,15 @@ const Header = () => {
         {/* Logo */}
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
           <div className="d-flex align-items-center">
-            <div 
-              className="rounded-circle me-2 d-flex align-items-center justify-content-center"
+            <img 
+              src="/imarticus learning icon.svg" 
+              alt="Imarticus Learning" 
               style={{ 
-                width: '40px', 
-                height: '40px', 
-                backgroundColor: '#2c6e4f',
-                color: 'white',
-                fontWeight: 'bold'
+                height: '32px',
+                width: 'auto',
+                marginRight: '10px'
               }}
-            >
-              I
-            </div>
-            <div>
-              <div className="fw-bold text-dark" style={{ fontSize: '1.1rem' }}>IMARTICUS</div>
-              <div className="text-muted small">LEARNING</div>
-            </div>
-            <div className="ms-2 bg-warning text-dark px-2 py-1 rounded small fw-bold">
-              12 YEARS
-            </div>
+            />
           </div>
         </Navbar.Brand>
 

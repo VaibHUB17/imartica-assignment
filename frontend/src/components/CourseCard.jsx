@@ -1,0 +1,194 @@
+import React from 'react';
+import { Card, Badge, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+const CourseCard = ({ 
+  course, 
+  showEnrollButton = true, 
+  showProgress = false, 
+  progress = 0,
+  onEnroll,
+  isEnrolled = false 
+}) => {
+  const {
+    _id,
+    title,
+    description,
+    instructor,
+    duration,
+    difficulty,
+    price,
+    thumbnail,
+    category,
+    isPublished,
+    modules = []
+  } = course;
+
+  const totalLectures = modules.reduce((total, module) => total + (module.items?.length || 0), 0);
+
+  const handleEnroll = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onEnroll) {
+      onEnroll(_id);
+    }
+  };
+
+  const getDifficultyColor = (difficulty) => {
+    switch (difficulty?.toLowerCase()) {
+      case 'beginner': return 'success';
+      case 'intermediate': return 'warning';
+      case 'advanced': return 'danger';
+      default: return 'secondary';
+    }
+  };
+
+  return (
+    <Card 
+      className="h-100 shadow-sm border-0" 
+      style={{
+        transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+        cursor: 'pointer'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = '0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)';
+      }}
+    >
+      <div className="position-relative">
+        {thumbnail ? (
+          <Card.Img 
+            variant="top" 
+            src={thumbnail} 
+            alt={title}
+            style={{ height: '200px', objectFit: 'cover' }}
+          />
+        ) : (
+          <div 
+            className="d-flex align-items-center justify-content-center bg-light"
+            style={{ height: '200px' }}
+          >
+            <i className="bi bi-play-circle text-muted" style={{ fontSize: '3rem' }}></i>
+          </div>
+        )}
+        
+        {difficulty && (
+          <Badge 
+            bg={getDifficultyColor(difficulty)}
+            className="position-absolute top-0 start-0 m-2"
+          >
+            {difficulty}
+          </Badge>
+        )}
+
+        {!isPublished && (
+          <Badge 
+            bg="warning"
+            className="position-absolute top-0 end-0 m-2"
+          >
+            Draft
+          </Badge>
+        )}
+      </div>
+
+      <Card.Body className="d-flex flex-column">
+        <div className="mb-2">
+          {category && (
+            <Badge bg="light" text="dark" className="me-2 mb-2">
+              {category}
+            </Badge>
+          )}
+        </div>
+
+        <Card.Title className="h5 mb-2" style={{ minHeight: '3rem' }}>
+          {title}
+        </Card.Title>
+
+        <Card.Text className="text-muted small mb-3" style={{ minHeight: '4rem' }}>
+          {description?.length > 100 
+            ? `${description.substring(0, 100)}...` 
+            : description
+          }
+        </Card.Text>
+
+        <div className="mb-3">
+          <div className="d-flex justify-content-between align-items-center text-muted small">
+            <span>
+              <i className="bi bi-person me-1"></i>
+              {instructor || 'Imarticus Learning'}
+            </span>
+            <span>
+              <i className="bi bi-clock me-1"></i>
+              {duration || `${totalLectures} lectures`}
+            </span>
+          </div>
+        </div>
+
+        {showProgress && (
+          <div className="mb-3">
+            <div className="d-flex justify-content-between mb-1">
+              <small>Progress</small>
+              <small>{Math.round(progress)}%</small>
+            </div>
+            <div className="progress" style={{ height: '6px' }}>
+              <div 
+                className="progress-bar bg-success"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+          </div>
+        )}
+
+        <div className="mt-auto">
+          {price && price > 0 ? (
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <span className="h5 mb-0 text-success">₹{price.toLocaleString()}</span>
+            </div>
+          ) : (
+            <div className="mb-3">
+              <span className="h5 mb-0 text-success">Free</span>
+            </div>
+          )}
+
+          <div className="d-grid gap-2">
+            <Button 
+              as={Link} 
+              to={`/courses/${_id}`}
+              variant="outline-primary" 
+              size="sm"
+            >
+              View Details
+            </Button>
+            
+            {showEnrollButton && !isEnrolled && (
+              <Button 
+                variant="primary"
+                size="sm"
+                onClick={handleEnroll}
+              >
+                Enroll Now
+              </Button>
+            )}
+
+            {isEnrolled && (
+              <Button 
+                as={Link} 
+                to={`/courses/${_id}`}
+                variant="success"
+                size="sm"
+              >
+                Continue Learning
+              </Button>
+            )}
+          </div>
+        </div>
+      </Card.Body>
+    </Card>
+  );
+};
+
+export default CourseCard;

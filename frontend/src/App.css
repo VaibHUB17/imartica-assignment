@@ -232,6 +232,10 @@
   overflow: hidden;
 }
 
+.h-fit {
+  height: fit-content !important;
+}
+
 /* Responsive improvements */
 @media (max-width: 768px) {
   .container {

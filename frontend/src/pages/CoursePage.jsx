@@ -308,7 +308,7 @@ const CoursePage = () => {
         </Col>
 
         <Col lg={4}>
-          <Card className="border-0 shadow-sm sticky-top" style={{ top: '100px' }}>
+          <Card className="border-0 shadow-sm h-fit">
             <Card.Body>
               {course.thumbnail && (
                 <img

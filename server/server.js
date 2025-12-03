@@ -99,7 +99,9 @@ app.use('/api/documents', documentRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/applications', applicationRoutes);
-
+app.use('/api/health', (req, res) => {
+  res.status(200).json({ success: true, message: 'API is healthy' });
+});
 const PORT = process.env.PORT || 5000;
 let server;
 

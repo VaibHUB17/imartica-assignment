@@ -135,21 +135,20 @@ const AdminDashboard = () => {
       <Tabs 
         activeKey={activeTab} 
         onSelect={setActiveTab}
-        className="mb-4 nav-fill"
-        variant="pills"
+        className="mb-4"
       >
         <Tab eventKey="overview" title="Overview">
           {/* Stats Cards */}
-          <Row className="mb-4 g-3">
-            <Col xl={3} lg={6} md={6} sm={6} className="mb-3">
+          <Row className="mb-4">
+            <Col lg={3} md={6} className="mb-3">
               <Card className="border-0 shadow-sm h-100">
-                <Card.Body className="text-center p-3">
+                <Card.Body className="text-center">
                   <div className="bg-primary bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                       style={{ width: '50px', height: '50px' }}>
-                    <i className="bi bi-collection text-primary" style={{ fontSize: '1.25rem' }}></i>
+                       style={{ width: '60px', height: '60px' }}>
+                    <i className="bi bi-collection text-primary" style={{ fontSize: '1.5rem' }}></i>
                   </div>
-                  <h4 className="fw-bold mb-1">{stats.totalCourses}</h4>
-                  <p className="text-muted mb-1 small">Total Courses</p>
+                  <h3 className="fw-bold">{stats.totalCourses}</h3>
+                  <p className="text-muted mb-0">Total Courses</p>
                   <small className="text-success">
                     {stats.publishedCourses} published
                   </small>
@@ -157,15 +156,15 @@ const AdminDashboard = () => {
               </Card>
             </Col>
 
-            <Col xl={3} lg={6} md={6} sm={6} className="mb-3">
+            <Col lg={3} md={6} className="mb-3">
               <Card className="border-0 shadow-sm h-100">
-                <Card.Body className="text-center p-3">
+                <Card.Body className="text-center">
                   <div className="bg-success bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                       style={{ width: '50px', height: '50px' }}>
-                    <i className="bi bi-people text-success" style={{ fontSize: '1.25rem' }}></i>
+                       style={{ width: '60px', height: '60px' }}>
+                    <i className="bi bi-people text-success" style={{ fontSize: '1.5rem' }}></i>
                   </div>
-                  <h4 className="fw-bold mb-1">{stats.totalUsers}</h4>
-                  <p className="text-muted mb-1 small">Total Users</p>
+                  <h3 className="fw-bold">{stats.totalUsers}</h3>
+                  <p className="text-muted mb-0">Total Users</p>
                   <small className="text-info">
                     {stats.totalStudents} students
                   </small>
@@ -173,29 +172,29 @@ const AdminDashboard = () => {
               </Card>
             </Col>
 
-            <Col xl={3} lg={6} md={6} sm={6} className="mb-3">
+            <Col lg={3} md={6} className="mb-3">
               <Card className="border-0 shadow-sm h-100">
-                <Card.Body className="text-center p-3">
+                <Card.Body className="text-center">
                   <div className="bg-warning bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                       style={{ width: '50px', height: '50px' }}>
-                    <i className="bi bi-graph-up text-warning" style={{ fontSize: '1.25rem' }}></i>
+                       style={{ width: '60px', height: '60px' }}>
+                    <i className="bi bi-graph-up text-warning" style={{ fontSize: '1.5rem' }}></i>
                   </div>
-                  <h4 className="fw-bold mb-1">0</h4>
-                  <p className="text-muted mb-1 small">Total Enrollments</p>
+                  <h3 className="fw-bold">0</h3>
+                  <p className="text-muted mb-0">Total Enrollments</p>
                   <small className="text-muted">This month</small>
                 </Card.Body>
               </Card>
             </Col>
 
-            <Col xl={3} lg={6} md={6} sm={6} className="mb-3">
+            <Col lg={3} md={6} className="mb-3">
               <Card className="border-0 shadow-sm h-100">
-                <Card.Body className="text-center p-3">
+                <Card.Body className="text-center">
                   <div className="bg-info bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                       style={{ width: '50px', height: '50px' }}>
-                    <i className="bi bi-currency-rupee text-info" style={{ fontSize: '1.25rem' }}></i>
+                       style={{ width: '60px', height: '60px' }}>
+                    <i className="bi bi-currency-rupee text-info" style={{ fontSize: '1.5rem' }}></i>
                   </div>
-                  <h4 className="fw-bold mb-1">₹0</h4>
-                  <p className="text-muted mb-1 small">Revenue</p>
+                  <h3 className="fw-bold">₹0</h3>
+                  <p className="text-muted mb-0">Revenue</p>
                   <small className="text-muted">This month</small>
                 </Card.Body>
               </Card>
@@ -207,71 +206,63 @@ const AdminDashboard = () => {
             <Card.Header>
               <h5 className="mb-0">Recent Courses</h5>
             </Card.Header>
-            <Card.Body className="p-0">
+            <Card.Body>
               {courses.length > 0 ? (
-                <div className="table-responsive">
-                  <Table hover className="mb-0">
-                    <thead className="table-light">
-                      <tr>
-                        <th className="border-0">Course</th>
-                        <th className="border-0 d-none d-md-table-cell">Category</th>
-                        <th className="border-0">Status</th>
-                        <th className="border-0 d-none d-lg-table-cell">Created</th>
-                        <th className="border-0 text-center">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {courses.slice(0, 5).map(course => (
-                        <tr key={course._id}>
-                          <td className="border-0">
-                            <div>
-                              <div className="fw-medium">{course.title}</div>
-                              <small className="text-muted">
-                                {course.modules?.length || 0} modules
-                                <span className="d-md-none"> • {course.category || 'Uncategorized'}</span>
-                              </small>
-                            </div>
-                          </td>
-                          <td className="border-0 d-none d-md-table-cell">
-                            <Badge bg="light" text="dark">{course.category || 'Uncategorized'}</Badge>
-                          </td>
-                          <td className="border-0">
-                            <Badge bg={course.isPublished ? 'success' : 'warning'}>
-                              {course.isPublished ? 'Published' : 'Draft'}
-                            </Badge>
-                          </td>
-                          <td className="border-0 d-none d-lg-table-cell">
+                <Table responsive hover>
+                  <thead>
+                    <tr>
+                      <th>Course</th>
+                      <th>Category</th>
+                      <th>Status</th>
+                      <th>Created</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {courses.slice(0, 5).map(course => (
+                      <tr key={course._id}>
+                        <td>
+                          <div>
+                            <div className="fw-medium">{course.title}</div>
                             <small className="text-muted">
-                              {new Date(course.createdAt).toLocaleDateString()}
+                              {course.modules?.length || 0} modules
                             </small>
-                          </td>
-                          <td className="border-0">
-                            <div className="d-flex gap-1 justify-content-center">
-                              <Button 
-                                variant="outline-primary" 
-                                size="sm"
-                                href={`/courses/${course._id}`}
-                                className="px-2"
-                              >
-                                <i className="bi bi-eye d-lg-none"></i>
-                                <span className="d-none d-lg-inline">View</span>
-                              </Button>
-                              <Button 
-                                variant="outline-danger" 
-                                size="sm"
-                                onClick={() => handleDeleteCourse(course._id)}
-                                className="px-2"
-                              >
-                                <i className="bi bi-trash d-lg-none"></i>
-                                <span className="d-none d-lg-inline">Delete</span>
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </div>
+                          </div>
+                        </td>
+                        <td>
+                          <Badge bg="light" text="dark">{course.category || 'Uncategorized'}</Badge>
+                        </td>
+                        <td>
+                          <Badge bg={course.isPublished ? 'success' : 'warning'}>
+                            {course.isPublished ? 'Published' : 'Draft'}
+                          </Badge>
+                        </td>
+                        <td>
+                          <small className="text-muted">
+                            {new Date(course.createdAt).toLocaleDateString()}
+                          </small>
+                        </td>
+                        <td>
+                          <Button 
+                            variant="outline-primary" 
+                            size="sm" 
+                            className="me-2"
+                            href={`/courses/${course._id}`}
+                          >
+                            View
+                          </Button>
+                          <Button 
+                            variant="outline-danger" 
+                            size="sm"
+                            onClick={() => handleDeleteCourse(course._id)}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
               ) : (
                 <div className="text-center py-4 text-muted">
                   <i className="bi bi-collection fs-2 d-block mb-3"></i>
@@ -293,91 +284,78 @@ const AdminDashboard = () => {
                 <i className="bi bi-plus me-2"></i>New Course
               </Button>
             </Card.Header>
-            <Card.Body className="p-0">
+            <Card.Body>
               {courses.length > 0 ? (
-                <div className="table-responsive">
-                  <Table hover className="mb-0">
-                    <thead className="table-light">
-                      <tr>
-                        <th className="border-0">Course Details</th>
-                        <th className="border-0 d-none d-md-table-cell">Category</th>
-                        <th className="border-0 d-none d-lg-table-cell">Difficulty</th>
-                        <th className="border-0 d-none d-lg-table-cell">Price</th>
-                        <th className="border-0">Status</th>
-                        <th className="border-0 text-center">Actions</th>
+                <Table responsive hover>
+                  <thead>
+                    <tr>
+                      <th>Course Details</th>
+                      <th>Category</th>
+                      <th>Difficulty</th>
+                      <th>Price</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {courses.map(course => (
+                      <tr key={course._id}>
+                        <td>
+                          <div>
+                            <div className="fw-medium">{course.title}</div>
+                            <small className="text-muted">
+                              {course.modules?.length || 0} modules • {course.instructor || 'No instructor'}
+                            </small>
+                          </div>
+                        </td>
+                        <td>
+                          <Badge bg="light" text="dark">{course.category || 'Uncategorized'}</Badge>
+                        </td>
+                        <td>
+                          <Badge bg={
+                            course.difficulty === 'beginner' ? 'success' :
+                            course.difficulty === 'intermediate' ? 'warning' : 'danger'
+                          }>
+                            {course.difficulty || 'Not set'}
+                          </Badge>
+                        </td>
+                        <td>
+                          {course.price ? `₹${course.price}` : 'Free'}
+                        </td>
+                        <td>
+                          <Badge bg={course.isPublished ? 'success' : 'warning'}>
+                            {course.isPublished ? 'Published' : 'Draft'}
+                          </Badge>
+                        </td>
+                        <td>
+                          <div className="d-flex gap-1">
+                            <Button 
+                              variant="outline-primary" 
+                              size="sm"
+                              href={`/courses/${course._id}`}
+                            >
+                              <i className="bi bi-eye"></i>
+                            </Button>
+                            <Button 
+                              variant={course.isPublished ? 'outline-warning' : 'outline-success'}
+                              size="sm"
+                              onClick={() => handleTogglePublish(course._id, course.isPublished)}
+                            >
+                              <i className={`bi bi-${course.isPublished ? 'eye-slash' : 'eye'}`}></i>
+                            </Button>
+                            <Button 
+                              variant="outline-danger" 
+                              size="sm"
+                              onClick={() => handleDeleteCourse(course._id)}
+                            >
+                              <i className="bi bi-trash"></i>
+                            </Button>
+                          </div>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {courses.map(course => (
-                        <tr key={course._id}>
-                          <td className="border-0">
-                            <div>
-                              <div className="fw-medium">{course.title}</div>
-                              <small className="text-muted">
-                                {course.modules?.length || 0} modules 
-                                <span className="d-md-none"> • {course.category || 'Uncategorized'}</span>
-                                <span className="d-lg-none d-md-inline"> • {course.difficulty || 'Not set'}</span>
-                                {course.instructor && <span> • {course.instructor}</span>}
-                              </small>
-                            </div>
-                          </td>
-                          <td className="border-0 d-none d-md-table-cell">
-                            <Badge bg="light" text="dark">{course.category || 'Uncategorized'}</Badge>
-                          </td>
-                          <td className="border-0 d-none d-lg-table-cell">
-                            <Badge bg={
-                              course.difficulty === 'beginner' ? 'success' :
-                              course.difficulty === 'intermediate' ? 'warning' : 'danger'
-                            }>
-                              {course.difficulty || 'Not set'}
-                            </Badge>
-                          </td>
-                          <td className="border-0 d-none d-lg-table-cell">
-                            {course.price ? `₹${course.price}` : 'Free'}
-                          </td>
-                          <td className="border-0">
-                            <Badge bg={course.isPublished ? 'success' : 'warning'}>
-                              {course.isPublished ? 'Published' : 'Draft'}
-                            </Badge>
-                          </td>
-                          <td className="border-0">
-                            <div className="d-flex gap-1 justify-content-center">
-                              <Button 
-                                variant="outline-primary" 
-                                size="sm"
-                                href={`/courses/${course._id}`}
-                                className="px-2"
-                              >
-                                <i className="bi bi-eye d-lg-none"></i>
-                                <span className="d-none d-lg-inline">View</span>
-                              </Button>
-                              <Button 
-                                variant={course.isPublished ? 'outline-warning' : 'outline-success'}
-                                size="sm"
-                                onClick={() => handleTogglePublish(course._id, course.isPublished)}
-                                className="px-2"
-                              >
-                                <i className={`bi bi-${course.isPublished ? 'eye-slash' : 'eye'} d-lg-none`}></i>
-                                <span className="d-none d-lg-inline">
-                                  {course.isPublished ? 'Unpublish' : 'Publish'}
-                                </span>
-                              </Button>
-                              <Button 
-                                variant="outline-danger" 
-                                size="sm"
-                                onClick={() => handleDeleteCourse(course._id)}
-                                className="px-2"
-                              >
-                                <i className="bi bi-trash d-lg-none"></i>
-                                <span className="d-none d-lg-inline">Delete</span>
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </div>
+                    ))}
+                  </tbody>
+                </Table>
               ) : (
                 <div className="text-center py-5 text-muted">
                   <i className="bi bi-collection fs-1 d-block mb-3"></i>
@@ -446,15 +424,15 @@ const AdminDashboard = () => {
       </Tabs>
 
       {/* Create Course Modal */}
-      <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)} size="lg" fullscreen="lg-down">
+      <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Create New Course</Modal.Title>
         </Modal.Header>
         <Form onSubmit={(e) => { e.preventDefault(); courseForm.handleSubmit(handleCreateCourse); }}>
           <Modal.Body>
             <Row>
-              <Col lg={6} className="mb-3">
-                <Form.Group>
+              <Col md={6}>
+                <Form.Group className="mb-3">
                   <Form.Label>Course Title</Form.Label>
                   <Form.Control
                     name="title"
@@ -469,8 +447,8 @@ const AdminDashboard = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
-              <Col lg={6} className="mb-3">
-                <Form.Group>
+              <Col md={6}>
+                <Form.Group className="mb-3">
                   <Form.Label>Category</Form.Label>
                   <Form.Control
                     name="category"
@@ -505,8 +483,8 @@ const AdminDashboard = () => {
             </Form.Group>
 
             <Row>
-              <Col md={4} className="mb-3">
-                <Form.Group>
+              <Col md={4}>
+                <Form.Group className="mb-3">
                   <Form.Label>Difficulty Level</Form.Label>
                   <Form.Select
                     name="difficulty"
@@ -519,8 +497,8 @@ const AdminDashboard = () => {
                   </Form.Select>
                 </Form.Group>
               </Col>
-              <Col md={4} className="mb-3">
-                <Form.Group>
+              <Col md={4}>
+                <Form.Group className="mb-3">
                   <Form.Label>Price (₹)</Form.Label>
                   <Form.Control
                     type="number"
@@ -531,8 +509,8 @@ const AdminDashboard = () => {
                   />
                 </Form.Group>
               </Col>
-              <Col md={4} className="mb-3">
-                <Form.Group>
+              <Col md={4}>
+                <Form.Group className="mb-3">
                   <Form.Label>Duration</Form.Label>
                   <Form.Control
                     name="duration"
@@ -562,11 +540,11 @@ const AdminDashboard = () => {
               onChange={courseForm.handleChange}
             />
           </Modal.Body>
-          <Modal.Footer className="d-flex gap-2">
-            <Button variant="secondary" onClick={() => setShowCreateModal(false)} className="flex-fill flex-sm-grow-0">
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowCreateModal(false)}>
               Cancel
             </Button>
-            <Button type="submit" variant="primary" disabled={courseForm.isSubmitting} className="flex-fill flex-sm-grow-0">
+            <Button type="submit" variant="primary" disabled={courseForm.isSubmitting}>
               {courseForm.isSubmitting ? 'Creating...' : 'Create Course'}
             </Button>
           </Modal.Footer>

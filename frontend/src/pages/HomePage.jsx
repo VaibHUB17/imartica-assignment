@@ -72,41 +72,40 @@ const HomePage = () => {
           {/* Main Content */}
           <Row className="justify-content-center text-center">
             <Col lg={10} xl={8}>
-              <h1 className="display-5 display-md-4 fw-bold mb-4" style={{ color: '#5a6c7d' }}>
-                Become a Digital Marketer in<br className="d-none d-md-block" />
-                <span className="d-md-none"> </span>
+              <h1 className="display-4 fw-bold mb-4" style={{ color: '#5a6c7d' }}>
+                Become a Digital Marketer in<br />
                 <span style={{ color: '#5a6c7d' }}>18 Weeks</span>
               </h1>
               
-              <p className="lead mb-4 mb-md-5" style={{ color: '#6c757d' }}>
+              <p className="lead mb-5" style={{ color: '#6c757d' }}>
                 MyCaptain Digital Marketing Program with Job Assurance
               </p>
 
               {/* Info Cards */}
-              <div className="bg-white rounded p-3 p-md-4 mb-4 mb-md-5 shadow-sm">
+              <div className="bg-white rounded p-4 mb-5 shadow-sm">
                 <Row className="g-0 text-center">
-                  <Col xs={6} md={3} className="border-end border-light border-bottom border-md-bottom-0 d-md-block">
-                    <div className="p-2 p-md-3">
+                  <Col md={3} className="border-end border-light">
+                    <div className="p-3">
                       <div className="text-muted small mb-1">Next Batch</div>
-                      <div className="fw-bold small" style={{ color: '#333' }}>October</div>
+                      <div className="fw-bold" style={{ color: '#333' }}>October</div>
                     </div>
                   </Col>
-                  <Col xs={6} md={3} className="border-end border-light border-md-end border-bottom border-md-bottom-0">
-                    <div className="p-2 p-md-3">
+                  <Col md={3} className="border-end border-light">
+                    <div className="p-3">
                       <div className="text-muted small mb-1">Available Seats</div>
-                      <div className="fw-bold small" style={{ color: '#333' }}>29/60</div>
+                      <div className="fw-bold" style={{ color: '#333' }}>29/60</div>
                     </div>
                   </Col>
-                  <Col xs={6} md={3} className="border-end border-light border-md-end">
-                    <div className="p-2 p-md-3">
+                  <Col md={3} className="border-end border-light">
+                    <div className="p-3">
                       <div className="text-muted small mb-1">Taught by experts from</div>
-                      <div className="fw-bold small" style={{ color: '#333' }}>Rapido, Deloitte, MFine, Zomato</div>
+                      <div className="fw-bold" style={{ color: '#333' }}>Rapido, Deloitte, MFine, Zomato</div>
                     </div>
                   </Col>
-                  <Col xs={6} md={3}>
-                    <div className="p-2 p-md-3">
+                  <Col md={3}>
+                    <div className="p-3">
                       <div className="text-muted small mb-1">Designed for</div>
-                      <div className="fw-bold small" style={{ color: '#333' }}>Freshers & Early Working Professionals</div>
+                      <div className="fw-bold" style={{ color: '#333' }}>Freshers & Early Working Professionals</div>
                     </div>
                   </Col>
                 </Row>
@@ -125,12 +124,12 @@ const HomePage = () => {
               </div>
 
               {/* Action Buttons */}
-                      <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                      <div className="d-flex gap-3 justify-content-center">
                       <Button 
                         as={Link}
                         to="/courses"
                         size="lg"
-                        className="px-4 px-md-5 py-3"
+                        className="px-5 py-3"
                         style={{ 
                         backgroundColor: '#ff6b35',
                         border: 'none',
@@ -174,90 +173,90 @@ const HomePage = () => {
           </Row>
 
           <Row className="g-4">
-            <Col lg={4} md={6} sm={6}>
+            <Col md={4}>
               <Card className="border-0 h-100 text-center">
                 <Card.Body className="py-4">
                   <div className="bg-primary bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                       style={{ width: '60px', height: '60px' }}>
-                    <i className="bi bi-people text-primary" style={{ fontSize: '1.5rem' }}></i>
+                       style={{ width: '80px', height: '80px' }}>
+                    <i className="bi bi-people text-primary" style={{ fontSize: '2rem' }}></i>
                   </div>
-                  <Card.Title className="h6 h5-md">Expert Instructors</Card.Title>
-                  <Card.Text className="text-muted small">
+                  <Card.Title className="h5">Expert Instructors</Card.Title>
+                  <Card.Text className="text-muted">
                     Learn from industry professionals with years of real-world experience
                   </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
 
-            <Col lg={4} md={6} sm={6}>
+            <Col md={4}>
               <Card className="border-0 h-100 text-center">
                 <Card.Body className="py-4">
                   <div className="bg-success bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                       style={{ width: '60px', height: '60px' }}>
-                    <i className="bi bi-trophy text-success" style={{ fontSize: '1.5rem' }}></i>
+                       style={{ width: '80px', height: '80px' }}>
+                    <i className="bi bi-trophy text-success" style={{ fontSize: '2rem' }}></i>
                   </div>
-                  <Card.Title className="h6 h5-md">Job Assurance</Card.Title>
-                  <Card.Text className="text-muted small">
+                  <Card.Title className="h5">Job Assurance</Card.Title>
+                  <Card.Text className="text-muted">
                     Get guaranteed placement assistance and career support
                   </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
 
-            <Col lg={4} md={6} sm={6}>
+            <Col md={4}>
               <Card className="border-0 h-100 text-center">
                 <Card.Body className="py-4">
                   <div className="bg-info bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                       style={{ width: '60px', height: '60px' }}>
-                    <i className="bi bi-laptop text-info" style={{ fontSize: '1.5rem' }}></i>
+                       style={{ width: '80px', height: '80px' }}>
+                    <i className="bi bi-laptop text-info" style={{ fontSize: '2rem' }}></i>
                   </div>
-                  <Card.Title className="h6 h5-md">Hands-on Learning</Card.Title>
-                  <Card.Text className="text-muted small">
+                  <Card.Title className="h5">Hands-on Learning</Card.Title>
+                  <Card.Text className="text-muted">
                     Practice with real projects and build portfolio-worthy work
                   </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
 
-            <Col lg={4} md={6} sm={6}>
+            <Col md={4}>
               <Card className="border-0 h-100 text-center">
                 <Card.Body className="py-4">
                   <div className="bg-warning bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                       style={{ width: '60px', height: '60px' }}>
-                    <i className="bi bi-clock text-warning" style={{ fontSize: '1.5rem' }}></i>
+                       style={{ width: '80px', height: '80px' }}>
+                    <i className="bi bi-clock text-warning" style={{ fontSize: '2rem' }}></i>
                   </div>
-                  <Card.Title className="h6 h5-md">Flexible Schedule</Card.Title>
-                  <Card.Text className="text-muted small">
-                    Practice with real projects and build portfolio-worthy work
+                  <Card.Title className="h5">Flexible Schedule</Card.Title>
+                  <Card.Text className="text-muted">
+                    Learn at your own pace with recorded lectures and live sessions
                   </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
 
-            <Col lg={4} md={6} sm={6}>
+            <Col md={4}>
               <Card className="border-0 h-100 text-center">
                 <Card.Body className="py-4">
                   <div className="bg-primary bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                       style={{ width: '60px', height: '60px' }}>
-                    <i className="bi bi-award text-primary" style={{ fontSize: '1.5rem' }}></i>
+                       style={{ width: '80px', height: '80px' }}>
+                    <i className="bi bi-award text-primary" style={{ fontSize: '2.5rem' }}></i>
                   </div>
-                  <Card.Title className="h6 h5-md">Certification</Card.Title>
-                  <Card.Text className="text-muted small">
+                  <Card.Title className="h5">Certification</Card.Title>
+                  <Card.Text className="text-muted">
                     Earn industry-recognized certificates upon course completion
                   </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
 
-            <Col lg={4} md={6} sm={6}>
+            <Col md={4}>
               <Card className="border-0 h-100 text-center">
                 <Card.Body className="py-4">
                   <div className="bg-secondary bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
-                       style={{ width: '60px', height: '60px' }}>
-                    <i className="bi bi-headset text-secondary" style={{ fontSize: '1.5rem' }}></i>
+                       style={{ width: '80px', height: '80px' }}>
+                    <i className="bi bi-headset text-secondary" style={{ fontSize: '2rem' }}></i>
                   </div>
-                  <Card.Title className="h6 h5-md">24/7 Support</Card.Title>
-                  <Card.Text className="text-muted small">
+                  <Card.Title className="h5">24/7 Support</Card.Title>
+                  <Card.Text className="text-muted">
                     Get help whenever you need it with our dedicated support team
                   </Card.Text>
                 </Card.Body>

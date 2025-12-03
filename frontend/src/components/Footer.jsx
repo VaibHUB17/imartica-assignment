@@ -6,10 +6,10 @@ const Footer = () => {
     <footer style={{ backgroundColor: '#2d6b4f', color: 'white' }} className="py-4 mt-5">
       <Container>
         {/* Top section with social media and app downloads */}
-        <Row className="align-items-center mb-4 g-3">
-          <Col md={6} className="text-center text-md-start">
-            <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-md-start">
-              <span className="me-0 me-sm-3 mb-2 mb-sm-0" style={{ fontSize: '14px' }}>Follow us on</span>
+        <Row className="align-items-center mb-4">
+          <Col md={6}>
+            <div className="d-flex align-items-center">
+              <span className="me-3" style={{ fontSize: '14px' }}>Follow us on</span>
               <div className="d-flex gap-3">
                 <a href="#" className="text-white text-decoration-none d-flex align-items-center justify-content-center" 
                    style={{ 
@@ -53,10 +53,10 @@ const Footer = () => {
               </div>
             </div>
           </Col>
-          <Col md={6} className="text-center text-md-end">
-            <div className="d-flex flex-column flex-sm-row justify-content-center justify-content-md-end align-items-center">
-              <span className="me-0 me-sm-3 mb-2 mb-sm-0" style={{ fontSize: '14px' }}>Download our app</span>
-              <div className="d-flex flex-column flex-sm-row gap-2">
+          <Col md={6} className="text-md-end">
+            <div className="d-flex justify-content-md-end align-items-center">
+              <span className="me-3" style={{ fontSize: '14px' }}>Download our app</span>
+              <div className="d-flex gap-2">
                 {/* Google Play Store */}
                 <a href="#" className="text-decoration-none">
                   <div 
@@ -118,44 +118,44 @@ const Footer = () => {
         <hr style={{ borderColor: 'rgba(255, 255, 255, 0.3)', margin: '2rem 0' }} />
 
         {/* Bottom section with logo and links */}
-        <Row className="align-items-center g-3">
-          <Col md={6} className="text-center text-md-start">
-            <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center justify-content-md-start">
+        <Row className="align-items-center">
+          <Col md={6}>
+            <div className="d-flex align-items-center">
               <div 
-                className="me-0 me-sm-3 mb-2 mb-sm-0 d-flex align-items-center justify-content-center"
+                className="me-3 d-flex align-items-center justify-content-center"
                 style={{ 
-                  width: '40px', 
-                  height: '40px', 
+                  width: '50px', 
+                  height: '50px', 
                   backgroundColor: 'rgba(255, 255, 255, 0.2)',
                   borderRadius: '8px',
-                  fontSize: '16px',
+                  fontSize: '20px',
                   fontWeight: 'bold'
                 }}
               >
                 <span style={{ color: '#90c695' }}>I</span>
-                <span style={{ color: 'white', fontSize: '10px', marginTop: '4px' }}>M</span>
+                <span style={{ color: 'white', fontSize: '12px', marginTop: '4px' }}>M</span>
               </div>
               <div>
-                <div className="fw-bold" style={{ fontSize: '16px', letterSpacing: '1px' }}>
+                <div className="fw-bold" style={{ fontSize: '18px', letterSpacing: '1px' }}>
                   IMARTICUS
                 </div>
-                <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.8)' }}>
+                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.8)' }}>
                   LEARNING
                 </div>
               </div>
             </div>
           </Col>
-          <Col md={6} className="text-center text-md-end">
-            <div className="d-flex flex-column flex-sm-row justify-content-center justify-content-md-end align-items-center flex-wrap gap-2 gap-sm-3">
-              <a href="/terms" className="text-white text-decoration-none" style={{ fontSize: '12px' }}>
+          <Col md={6} className="text-md-end">
+            <div className="d-flex justify-content-md-end align-items-center flex-wrap gap-3">
+              <a href="/terms" className="text-white text-decoration-none" style={{ fontSize: '14px' }}>
                 Terms & Conditions
               </a>
-              <span className="d-none d-sm-inline" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>|</span>
-              <a href="/privacy" className="text-white text-decoration-none" style={{ fontSize: '12px' }}>
+              <span style={{ color: 'rgba(255, 255, 255, 0.5)' }}>|</span>
+              <a href="/privacy" className="text-white text-decoration-none" style={{ fontSize: '14px' }}>
                 Privacy Policy
               </a>
             </div>
-            <div className="mt-2" style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.7)' }}>
+            <div className="mt-2" style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.7)' }}>
               © 2025 Imarticus Learning Pvt. Ltd. All rights reserved.
             </div>
           </Col>

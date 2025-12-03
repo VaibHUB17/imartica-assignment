@@ -303,7 +303,7 @@ const ModuleAccordion = ({
                                     const token = localStorage.getItem("token");
 
                                     const res = await fetch(
-                                      `http://localhost:5000/api/documents/${doc._id}/download`,
+                                      `${import.meta.env.VITE_API_URL}/documents/${doc._id}/download`,
                                       {
                                         method: "GET",
                                         headers: {

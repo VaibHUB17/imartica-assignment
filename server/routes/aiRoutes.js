@@ -1,7 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator';
 import {
-  summarizeDocument,
   batchSummarizeDocuments,
   getAIStatus
 } from '../controllers/aiController.js';
@@ -9,16 +8,6 @@ import { protect, adminOnly } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-const summarizeValidation = [
-  body('force')
-    .optional()
-    .isBoolean()
-    .withMessage('Force must be a boolean value'),
-  body('provider')
-    .optional()
-    .isIn(['openai', 'gemini'])
-    .withMessage('Provider must be either openai or gemini')
-];
 
 const batchSummarizeValidation = [
   body('documentIds')

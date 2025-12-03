@@ -81,47 +81,6 @@ const updateStatusValidation = [
     .withMessage('Priority must be low, medium, or high')
 ];
 
-const followUpValidation = [
-  body('followUpDate')
-    .isISO8601()
-    .withMessage('Follow-up date must be a valid ISO 8601 date')
-    .custom((value) => {
-      if (new Date(value) <= new Date()) {
-        throw new Error('Follow-up date must be in the future');
-      }
-      return true;
-    }),
-  body('notes')
-    .optional()
-    .trim()
-    .isLength({ max: 1000 })
-    .withMessage('Notes cannot exceed 1000 characters')
-];
-
-const bulkUpdateValidation = [
-  body('applicationIds')
-    .isArray({ min: 1 })
-    .withMessage('Application IDs must be a non-empty array'),
-  body('applicationIds.*')
-    .isMongoId()
-    .withMessage('Each application ID must be a valid MongoDB ObjectId'),
-  body('updates')
-    .isObject()
-    .withMessage('Updates must be an object'),
-  body('updates.status')
-    .optional()
-    .isIn(['pending', 'contacted', 'enrolled', 'rejected', 'follow_up'])
-    .withMessage('Invalid status value'),
-  body('updates.priority')
-    .optional()
-    .isIn(['low', 'medium', 'high'])
-    .withMessage('Priority must be low, medium, or high'),
-  body('updates.notes')
-    .optional()
-    .trim()
-    .isLength({ max: 2000 })
-    .withMessage('Notes cannot exceed 2000 characters')
-];
 
 router.post('/', submitApplicationValidation, submitApplication);
 

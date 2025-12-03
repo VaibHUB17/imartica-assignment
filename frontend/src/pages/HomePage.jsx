@@ -191,9 +191,9 @@ const HomePage = () => {
             <Col md={4}>
               <Card className="border-0 h-100 text-center">
                 <Card.Body className="py-4">
-                  <div className="bg-danger bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
+                  <div className="bg-primary bg-opacity-10 rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
                        style={{ width: '80px', height: '80px' }}>
-                    <i className="bi bi-certificate text-danger" style={{ fontSize: '2rem' }}></i>
+                    <i className="bi bi-award text-primary" style={{ fontSize: '2.5rem' }}></i>
                   </div>
                   <Card.Title className="h5">Certification</Card.Title>
                   <Card.Text className="text-muted">

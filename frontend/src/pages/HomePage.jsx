@@ -28,94 +28,141 @@ const HomePage = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-light py-5">
+      <section className="py-5" style={{ backgroundColor: '#f8f9fa' }}>
         <Container>
-          <Row className="align-items-center min-vh-50">
-            <Col lg={6}>
-              <h1 className="display-4 fw-bold text-dark mb-4">
-                Become a Digital Marketer in <span className="text-success">18 Weeks</span>
+          {/* MyCaptain Logo */}
+          <Row className="justify-content-center mb-4">
+            <Col xs="auto">
+              <div className="text-center">
+                <div className="d-flex align-items-center justify-content-center mb-2">
+                  <div 
+                    className="me-2"
+                    style={{ 
+                      width: '40px',
+                      height: '40px',
+                      background: 'linear-gradient(45deg, #ff6b35, #f7931e)',
+                      borderRadius: '8px',
+                      transform: 'rotate(45deg)',
+                      position: 'relative'
+                    }}
+                  >
+                    <div 
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%) rotate(-45deg)',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '18px'
+                      }}
+                    >
+                      m
+                    </div>
+                  </div>
+                  <div>
+                    <div className="fw-bold fs-4" style={{ color: '#333' }}>mycaptain</div>
+                  </div>
+                </div>
+                <div className="text-muted small">BY IMARTICUS LEARNING</div>
+              </div>
+            </Col>
+          </Row>
+
+          {/* Main Content */}
+          <Row className="justify-content-center text-center">
+            <Col lg={10} xl={8}>
+              <h1 className="display-4 fw-bold mb-4" style={{ color: '#5a6c7d' }}>
+                Become a Digital Marketer in<br />
+                <span style={{ color: '#5a6c7d' }}>18 Weeks</span>
               </h1>
-              <p className="lead text-muted mb-4">
+              
+              <p className="lead mb-5" style={{ color: '#6c757d' }}>
                 MyCaptain Digital Marketing Program with Job Assurance
               </p>
-              <p className="mb-4">
-                Taught by experts from <strong>Rapido, Deloitte, MFine, Zomato</strong>
-              </p>
-              
-              <div className="mb-4">
-                <Row className="g-3">
-                  <Col sm={6}>
-                    <Card className="border-0 bg-white shadow-sm">
-                      <Card.Body className="text-center py-3">
-                        <h6 className="text-muted small mb-1">Next Batch</h6>
-                        <div className="fw-bold">October</div>
-                      </Card.Body>
-                    </Card>
+
+              {/* Info Cards */}
+              <div className="bg-white rounded p-4 mb-5 shadow-sm">
+                <Row className="g-0 text-center">
+                  <Col md={3} className="border-end border-light">
+                    <div className="p-3">
+                      <div className="text-muted small mb-1">Next Batch</div>
+                      <div className="fw-bold" style={{ color: '#333' }}>October</div>
+                    </div>
                   </Col>
-                  <Col sm={6}>
-                    <Card className="border-0 bg-white shadow-sm">
-                      <Card.Body className="text-center py-3">
-                        <h6 className="text-muted small mb-1">Available Seats</h6>
-                        <div className="fw-bold">29/60</div>
-                      </Card.Body>
-                    </Card>
+                  <Col md={3} className="border-end border-light">
+                    <div className="p-3">
+                      <div className="text-muted small mb-1">Available Seats</div>
+                      <div className="fw-bold" style={{ color: '#333' }}>29/60</div>
+                    </div>
+                  </Col>
+                  <Col md={3} className="border-end border-light">
+                    <div className="p-3">
+                      <div className="text-muted small mb-1">Taught by experts from</div>
+                      <div className="fw-bold" style={{ color: '#333' }}>Rapido, Deloitte, MFine, Zomato</div>
+                    </div>
+                  </Col>
+                  <Col md={3}>
+                    <div className="p-3">
+                      <div className="text-muted small mb-1">Designed for</div>
+                      <div className="fw-bold" style={{ color: '#333' }}>Freshers & Early Working Professionals</div>
+                    </div>
                   </Col>
                 </Row>
               </div>
 
-              <div className="mb-4">
-                <div className="d-flex align-items-center mb-2">
-                  <Badge bg="warning" className="me-2">★ 4.51</Badge>
-                  <span className="text-muted small">1.2 Lac+ Learners</span>
+              {/* Rating */}
+              <div className="d-flex align-items-center justify-content-center mb-4">
+                <div className="d-flex align-items-center me-4">
+                  <span className="text-warning me-2">★</span>
+                  <span className="fw-bold me-1">4.51</span>
                 </div>
-                <div className="text-muted small">
-                  Designed for <strong>Freshers & Early Working Professionals</strong>
+                <div className="d-flex align-items-center">
+                  <i className="bi bi-people me-2 text-muted"></i>
+                  <span className="text-muted">1.2 Lacs+ Learners</span>
                 </div>
               </div>
 
-              <div className="d-grid d-md-flex gap-3">
-                <Button 
-                  as={Link} 
-                  to="/courses" 
-                  variant="success" 
-                  size="lg"
-                  className="px-4"
-                >
-                  Explore Course
-                </Button>
-                <Button 
-                  variant="outline-dark" 
-                  size="lg"
-                  className="px-4"
-                >
-                  Download Brochure
-                </Button>
-              </div>
-            </Col>
-            
-            <Col lg={6} className="text-center">
-              <div className="position-relative">
-                <div 
-                  className="bg-success rounded-circle mx-auto mb-4"
-                  style={{ width: '300px', height: '300px' }}
-                >
-                  <div className="d-flex align-items-center justify-content-center h-100">
-                    <i className="bi bi-mortarboard text-white" style={{ fontSize: '6rem' }}></i>
-                  </div>
-                </div>
-                <div className="position-absolute top-0 end-0">
-                  <Badge bg="warning" className="px-3 py-2">
-                    <i className="bi bi-trophy me-2"></i>
-                    12 Years
-                  </Badge>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+              {/* Action Buttons */}
+                      <div className="d-flex gap-3 justify-content-center">
+                      <Button 
+                        as={Link}
+                        to="/courses"
+                        size="lg"
+                        className="px-5 py-3"
+                        style={{ 
+                        backgroundColor: '#ff6b35',
+                        border: 'none',
+                        borderRadius: '8px',
+                        fontWeight: '600',
+                        color: 'white'
+                        }}
+                      >
+                        Browse Courses
+                      </Button>
+                      <Button 
+                        as="a"
+                        href="/brochure.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="dark"
+                        size="lg"
+                        className="px-4 py-3"
+                        style={{ 
+                        backgroundColor: '#2c3e50',
+                        border: 'none',
+                        borderRadius: '8px',
+                        fontWeight: '600'
+                        }}
+                      >
+                        Download Brochure
+                      </Button>
+                      </div>
+                    </Col>
+                    </Row>
+                  </Container>
+                  </section>
 
-      {/* Features Section */}
       <section className="py-5">
         <Container>
           <Row className="text-center mb-5">

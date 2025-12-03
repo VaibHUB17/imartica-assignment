@@ -126,14 +126,27 @@ const CoursesPage = () => {
         <p className="text-muted">Discover our comprehensive collection of professional development courses</p>
       </div>
 
-      <Row>
+      <Row className="g-4">
         {/* Filters Sidebar */}
         <Col lg={3} className="mb-4">
-          <Card className="border-0 shadow-sm">
-            <Card.Header className="bg-light border-0">
-              <h6 className="mb-0 fw-bold">Filter & Sort</h6>
-            </Card.Header>
-            <Card.Body>
+          <div className="d-lg-none mb-3">
+            <Button 
+              variant="outline-secondary" 
+              className="w-100"
+              data-bs-toggle="collapse" 
+              data-bs-target="#mobileFilters"
+              aria-expanded="false"
+              aria-controls="mobileFilters"
+            >
+              <i className="bi bi-funnel me-2"></i>Filters & Sort
+            </Button>
+          </div>
+          <div className="collapse d-lg-block" id="mobileFilters">
+            <Card className="border-0 shadow-sm">
+              <Card.Header className="bg-light border-0">
+                <h6 className="mb-0 fw-bold">Filter & Sort</h6>
+              </Card.Header>
+              <Card.Body>
               {/* Search */}
               <div className="mb-4">
                 <Form.Label className="fw-medium">Search Courses</Form.Label>
@@ -208,6 +221,7 @@ const CoursesPage = () => {
               </Button>
             </Card.Body>
           </Card>
+          </div>
 
           {/* Quick Stats */}
           <Card className="border-0 bg-light mt-4">
@@ -253,9 +267,9 @@ const CoursesPage = () => {
             />
           ) : (
             <>
-              <Row className="g-4">
+              <Row className="g-3 g-md-4">
                 {paginatedCourses.map(course => (
-                  <Col lg={4} md={6} key={course._id}>
+                  <Col xl={4} lg={6} md={6} sm={6} key={course._id}>
                     <CourseCard course={course} />
                   </Col>
                 ))}

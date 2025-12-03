@@ -68,24 +68,26 @@ const CourseCard = ({
           )}
         </div>
 
-        <Card.Title className="h5 mb-2" style={{ minHeight: '3rem' }}>
+        <Card.Title className="h6 h5-md mb-2" style={{ minHeight: '2.5rem', fontSize: '1rem', lineHeight: '1.3' }}>
           {title}
         </Card.Title>
 
-        <Card.Text className="text-muted small mb-3" style={{ minHeight: '4rem' }}>
-          {description?.length > 100 
-            ? `${description.substring(0, 100)}...` 
+        <Card.Text className="text-muted small mb-3" style={{ minHeight: '3rem', fontSize: '0.875rem' }}>
+          {description?.length > 80 
+            ? `${description.substring(0, 80)}...` 
             : description
           }
         </Card.Text>
 
         <div className="mb-3">
-          <div className="d-flex justify-content-between align-items-center text-muted small">
-            <span>
+          <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start text-muted small gap-1">
+            <span className="d-flex align-items-center">
               <i className="bi bi-person me-1"></i>
-              {instructor || 'Imarticus Learning'}
+              <span className="text-truncate" style={{ maxWidth: '120px' }}>
+                {instructor || 'Imarticus Learning'}
+              </span>
             </span>
-            <span>
+            <span className="d-flex align-items-center">
               <i className="bi bi-clock me-1"></i>
               {duration || `${totalLectures} lectures`}
             </span>

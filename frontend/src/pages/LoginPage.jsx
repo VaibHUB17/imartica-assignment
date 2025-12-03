@@ -48,9 +48,9 @@ const LoginPage = () => {
   };
 
   return (
-    <Container className="py-5">
+    <Container className="py-3 py-md-5">
       <Row className="justify-content-center">
-        <Col md={6} lg={5}>
+        <Col xs={12} sm={10} md={8} lg={6} xl={5}>
           <Card className="border-0 shadow">
             <Card.Body className="p-4">
               <div className="text-center mb-4">
@@ -151,22 +151,18 @@ const LoginPage = () => {
 
           {/* Demo Credentials */}
           <Card className="border-0 bg-light mt-4">
-            <Card.Body className="text-center">
+            <Card.Body className="text-center p-3">
               <h6 className="mb-3">Demo Credentials</h6>
-              <div className="row text-start">
-                <div className="col-6">
-                  <strong>Student Account:</strong>
-                  <br />
-                  <small className="text-muted">student@demo.com</small>
-                  <br />
-                  <small className="text-muted">password123</small>
+              <div className="row text-start g-3">
+                <div className="col-12 col-sm-6">
+                  <strong className="d-block mb-1">Student Account:</strong>
+                  <div className="small text-muted">student@demo.com</div>
+                  <div className="small text-muted">password123</div>
                 </div>
-                <div className="col-6">
-                  <strong>Admin Account:</strong>
-                  <br />
-                  <small className="text-muted">admin@demo.com</small>
-                  <br />
-                  <small className="text-muted">admin123</small>
+                <div className="col-12 col-sm-6">
+                  <strong className="d-block mb-1">Admin Account:</strong>
+                  <div className="small text-muted">admin@demo.com</div>
+                  <div className="small text-muted">admin123</div>
                 </div>
               </div>
             </Card.Body>

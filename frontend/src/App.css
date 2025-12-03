@@ -1,4 +1,5 @@
 /* Custom App Styles */
+@import './responsive-fixes.css';
 
 .App {
   min-height: 100vh;
